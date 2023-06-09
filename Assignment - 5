@@ -1,0 +1,38 @@
+# Consecutive 2 week gap between products
+
+CREATE TABLE sales (
+  product_id INTEGER,
+  sale_date TEXT
+);
+
+-- Insert sample data into the sales table
+INSERT INTO sales (product_id, sale_date)
+VALUES
+  (1, '2023-05-01'),
+  (1, '2023-05-07'),
+  (1, '2023-05-15'),
+  (1, '2023-05-20'),
+  (1, '2023-06-01'),
+  (2, '2023-05-01'),
+  (2, '2023-05-05'),
+  (2, '2023-05-17'),
+  (2, '2023-05-25'),
+  (2, '2023-06-05');
+
+-- Query to find consecutive two-week gaps between product sales
+SELECT
+  product_id,
+  sale_date,
+  previous_sale_date,
+  julianday(sale_date) - julianday(previous_sale_date) AS days_between_sales
+FROM
+  (
+    SELECT
+      product_id,
+      sale_date,
+      LAG(sale_date) OVER (PARTITION BY product_id ORDER BY sale_date) AS previous_sale_date
+    FROM
+      sales
+  ) AS subquery
+WHERE
+  julianday(sale_date) - julianday(previous_sale_date) >= 14;
