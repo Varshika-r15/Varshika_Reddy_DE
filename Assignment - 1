@@ -1,0 +1,11 @@
+# Append two lists in python
+
+list_x = ['Varshika','Sindhu','Jyothsna','Sangeetha']
+list_y = ['Dandyala','Valaboju','Devireddy','Rallabandi']
+updated_list = []
+for each1 in list_x:
+    for each2 in list_y:
+        updated_list.append(each1+" "+each2)
+        list_y.remove(each2)
+        break
+print(updated_list)
