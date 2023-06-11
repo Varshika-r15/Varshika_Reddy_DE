@@ -12,3 +12,4 @@ select * from table_a right outer join table_b on table_a.ID = table_b.ID;
 select * from table_a Full outer join table_b on table_a.ID = table_b.ID;
 select * from table_a left ANTI join table_b on table_a.ID = table_b.ID;
 select * from table_a right ANTI join table_b on table_a.ID = table_b.ID;
+# total number of elements for, Inner = 9, LOJ = 13, ROJ = 13, FOJ = 17, LAJ = 4, RAJ = 4 #
