@@ -1,0 +1,51 @@
+# Read the files which are listed out in a config file.
+
+## config file: varshika.cfg
+
+{
+  "file1": "health_effects.csv",
+  "file2": "heart_disease.csv"
+}
+
+## actual code to read the files which are listed out in a config file.
+
+import os
+import json
+import pandas as pd
+
+# Specify the path to save the config file
+config_file_path = '/Users/saidandyala/Desktop/varshika.cfg'
+
+# Write the config data to the JSON file
+with open(config_file_path, 'r') as json_file:
+    config_data = json.load(json_file)
+
+# Get the file names from the config data
+file1 = config_data.get('file1')
+file2 = config_data.get('file2')
+
+# files = list(config_data.values())
+
+# Recursive function to search for the files
+folder_path = '/Users/saidandyala/Desktop/Data_Engg'
+
+# Get the list of file names in the folder
+file_names = os.listdir(folder_path)
+
+# Match the file names with the config values
+matched_files = []
+for file_name in file_names:
+    if file_name == file1 or file_name == file2:
+        matched_files.append(file_name)
+
+# Print the matched files
+result_folder = '/Users/saidandyala/Desktop/result'
+os.makedirs(result_folder, exist_ok=True)
+
+# Load the contents of the matched CSV files into data frames and store them as separate CSV files
+for matched_file in matched_files:
+    file_path = os.path.join(folder_path, matched_file)
+    result_path = os.path.join(result_folder, matched_file)
+    df = pd.read_csv(file_path)  # Load CSV file into data frame
+    df.to_csv(result_path, index=False)  # Save data frame as a new CSV file
+print("CSV files saved in the result folder:", result_folder)
